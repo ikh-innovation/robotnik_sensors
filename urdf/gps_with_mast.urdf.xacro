@@ -5,7 +5,10 @@
   <xacro:property name="mast_radius" value="0.010" />
 
   <!-- if no latitude/longitud is specified, then use Fuente del Jarro as default -->
-  <xacro:macro name="sensor_gps_with_mast" params="prefix parent *origin gps_latitude:=^|39.5080331 gps_longitude:=^|-0.4619816">
+  <xacro:macro name="sensor_gps_with_mast" params="prefix parent *origin topic_name:='gnss' 
+  gps_latitude:=^|39.5080331 gps_longitude:=^|-0.4619816  rate:=5
+  referece_heading:='90' drift:='0 0 0' gaussian_noise:='0.000001 0.000001 0.000001'
+  vel_drift:='0.0000 0.0000 0.0000' vel_gaussian_noise:='0.00001 0.00001 0.00001'">
 
 	  <!-- MAST OF THE ANTENNA GPS -->
 	  <joint name="${prefix}_joint" type="fixed">
@@ -83,24 +86,24 @@
     <gazebo>
       <plugin name="${prefix}_controller" filename="libhector_gazebo_ros_gps.so">
         <alwaysOn>1</alwaysOn>
-        <updateRate>5</updateRate>
+        <updateRate>${rate}</updateRate>
         <bodyName>${prefix}_link</bodyName> <!-- must be the link of the gps device, not the base_link or base_footprint -->
         <frameId>${prefix}_link</frameId>   <!-- which frame_id would be on the published message -->
-        <topicName>fix</topicName>
+        <topicName>${topic_name}</topicName>
         <!-- GPS coordinates -->
         <referenceLatitude>${gps_latitude}</referenceLatitude>
         <referenceLongitude>${gps_longitude}</referenceLongitude>
         <!-- To set heading in ENU orientation (degrees) -->
-        <referenceHeading>90</referenceHeading>
-        <velocityTopicName>fix_velocity</velocityTopicName>
-        <drift>0.0 0.0 0.0</drift>
+        <referenceHeading>${referece_heading}</referenceHeading>
+        <velocityTopicName>${topic_name}/velocity</velocityTopicName>
+        <drift>${drift}</drift>
         <!--<drift>0.0001 0.0001 0.0001</drift>-->
         <!--<drift>0.3 0.3 0.3</drift>-->
-        <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+        <gaussianNoise>${gaussian_noise}</gaussianNoise>
         <!--<gaussianNoise>0.00001 0.00001 0.00001</gaussianNoise>-->
-        <velocityDrift>0.00001 0.00001 0.00001</velocityDrift>
+        <velocityDrift>${vel_drift}</velocityDrift>
         <!--<velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>-->
-        <velocityGaussianNoise>0.00001 0.00001 0.00001</velocityGaussianNoise>
+        <velocityGaussianNoise>${vel_gaussian_noise}</velocityGaussianNoise>
         <ignoreTfPrefix>1</ignoreTfPrefix>
       </plugin>
 	</gazebo>
