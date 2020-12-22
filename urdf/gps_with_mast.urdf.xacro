@@ -8,7 +8,7 @@
   <xacro:macro name="sensor_gps_with_mast" params="prefix parent *origin topic_name:='gnss' 
   gps_latitude:=^|39.5080331 gps_longitude:=^|-0.4619816  rate:=5
   referece_heading:='90' drift:='0 0 0' gaussian_noise:='0.000001 0.000001 0.000001'
-  vel_drift:='0.0000 0.0000 0.0000' vel_gaussian_noise:='0.00001 0.00001 0.00001'">
+  vel_drift:='0 0 0' vel_gaussian_noise:='0.000001 0.000001 0.000001'">
 
 	  <!-- MAST OF THE ANTENNA GPS -->
 	  <joint name="${prefix}_joint" type="fixed">
@@ -96,7 +96,8 @@
         <!-- To set heading in ENU orientation (degrees) -->
         <referenceHeading>${referece_heading}</referenceHeading>
         <velocityTopicName>${topic_name}/velocity</velocityTopicName>
-        <drift>${drift}</drift>
+		<drift>${drift}</drift>
+		<scaleError>0</scaleError>
         <!--<drift>0.0001 0.0001 0.0001</drift>-->
         <!--<drift>0.3 0.3 0.3</drift>-->
         <gaussianNoise>${gaussian_noise}</gaussianNoise>
