@@ -7,7 +7,7 @@
   <!-- if no latitude/longitud is specified, then use Fuente del Jarro as default -->
   <xacro:macro name="sensor_gps_with_mast" params="prefix parent *origin topic_name:='gnss' 
   gps_latitude:=^|39.5080331 gps_longitude:=^|-0.4619816  rate:=5
-  referece_heading:='90' drift:='0 0 0' gaussian_noise:='0.000001 0.000001 0.000001'
+  referece_heading:='90' drift:='0 0 0' gaussian_noise:='0.001 0.001 0.001'
   vel_drift:='0 0 0' vel_gaussian_noise:='0.000001 0.000001 0.000001'">
 
 	  <!-- MAST OF THE ANTENNA GPS -->
@@ -97,15 +97,18 @@
         <referenceHeading>${referece_heading}</referenceHeading>
         <velocityTopicName>${topic_name}/velocity</velocityTopicName>
 		<drift>${drift}</drift>
-		<scaleError>0</scaleError>
-        <!--<drift>0.0001 0.0001 0.0001</drift>-->
+		<!-- <scaleError>1</scaleError> -->
+        <drift>0.000 0.000 0.000</drift>
         <!--<drift>0.3 0.3 0.3</drift>-->
-        <gaussianNoise>${gaussian_noise}</gaussianNoise>
-        <!--<gaussianNoise>0.00001 0.00001 0.00001</gaussianNoise>-->
-        <velocityDrift>${vel_drift}</velocityDrift>
+        <!-- <gaussianNoise>${gaussian_noise}</gaussianNoise> -->
+        <gaussianNoise>0.00001 0.00001 0.00001</gaussianNoise>
+		<!-- <velocityDrift>${vel_drift}</velocityDrift> -->
+		<!-- <velocityDrift>0.00001 0.00001 0.00001</velocityDrift> -->
         <!--<velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>-->
-        <velocityGaussianNoise>${vel_gaussian_noise}</velocityGaussianNoise>
-        <ignoreTfPrefix>1</ignoreTfPrefix>
+		<!-- <velocityGaussianNoise>${vel_gaussian_noise}</velocityGaussianNoise> -->
+		<!-- <velocityGaussianNoise>0.00001 0.00001 0.00001</velocityGaussianNoise> -->
+
+        <!-- <ignoreTfPrefix>1</ignoreTfPrefix> -->
       </plugin>
 	</gazebo>
 
